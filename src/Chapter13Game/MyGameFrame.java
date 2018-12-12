@@ -8,15 +8,32 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class MyGameFrame extends JFrame{
+    Image plane = GameUtil.getImage("images/plane.png");
+    Image bg = GameUtil.getImage("images/bg.png");
+
+    int planeX=250;
+    int planeY=250;
     @Override
     public void paint(Graphics g) {
-        super.paint(g);
 
-        Color c = g.getColor();
+        g.drawImage(bg,0,0,null);
+        g.drawImage(plane,planeX,planeY,null);
+        planeX++;
+    }
+    //###############################################
+    class PaintThread extends Thread{
+        public void run(){
+            while (true){
+                System.out.println("窗口画一次");
+                repaint();;
 
-        g.setColor(Color.blue);
-        g.drawLine(100,100,400,400);
-        g.setColor(c);
+                try {
+                    Thread.sleep(40);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     //##############################################
@@ -32,11 +49,25 @@ public class MyGameFrame extends JFrame{
                 System.exit(0);
             }
         });
+
+        new PaintThread().start();//启动重画窗口的线程
     }
 
     public static void main(String[] args) {
         MyGameFrame f = new MyGameFrame();
         f.launchFrame();
+    }
+
+    //############################################################
+    private Image offScreenImage = null;
+
+    public void update(Graphics g) {
+        if(offScreenImage == null)
+            offScreenImage = this.createImage(500,500);//这是游戏窗口的宽度和高度
+
+        Graphics gOff = offScreenImage.getGraphics();
+        paint(gOff);
+        g.drawImage(offScreenImage, 0, 0, null);
     }
 
 
