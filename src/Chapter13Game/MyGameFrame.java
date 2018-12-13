@@ -4,6 +4,8 @@ package Chapter13Game;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -37,6 +39,20 @@ public class MyGameFrame extends JFrame{
         }
     }
 
+    //####################################################
+    //键盘监听类
+    class KeyMonitor extends KeyAdapter{
+        @Override
+        public void keyPressed(KeyEvent e) {
+            plane.addDirection(e);
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            plane.minusDirection(e);
+        }
+    }
+
     //##############################################
     public void launchFrame(){
         this.setTitle("雷电");
@@ -52,6 +68,7 @@ public class MyGameFrame extends JFrame{
         });
 
         new PaintThread().start();//启动重画窗口的线程
+        addKeyListener(new KeyMonitor()); //增加键盘监听
     }
 
     public static void main(String[] args) {
