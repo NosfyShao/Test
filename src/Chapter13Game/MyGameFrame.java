@@ -8,6 +8,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Date;
 
 public class MyGameFrame extends JFrame{
     Image planeImg = GameUtil.getImage("images/plane.png");
@@ -17,11 +18,18 @@ public class MyGameFrame extends JFrame{
     Shell[] shells= new Shell[3];
 
     Explode bao;
+    Date startTime=new Date();
+    Date endTime;
+    int period;
+
+    boolean m;
 
     int planeX=250;
     int planeY=250;
     @Override
     public void paint(Graphics g) {
+
+        Color c = g.getColor();
 
         g.drawImage(bg,0,0,null);
         plane.drawSelf(g);
@@ -33,11 +41,21 @@ public class MyGameFrame extends JFrame{
                 plane.alive=false;
                 if (bao==null){
                     bao=new Explode(plane.x,plane.y);
+                    endTime = new Date();
+                    period = (int)((endTime.getTime()-startTime.getTime())/1000);
                 }
                 bao.draw(g);
+            }
 
+            if (!plane.alive){
+                g.setColor(Color.WHITE);
+                Font f = new Font("宋体",Font.BOLD,21);
+                g.setFont(f);
+                g.drawString("时间："+period+"秒",planeX-50,planeY+15);
             }
         }
+
+        g.setColor(c);
 
     }
     //###############################################
