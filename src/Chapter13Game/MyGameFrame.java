@@ -8,8 +8,10 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class MyGameFrame extends JFrame{
-    Image plane = GameUtil.getImage("images/plane.png");
+    Image planeImg = GameUtil.getImage("images/plane.png");
     Image bg = GameUtil.getImage("images/bg.png");
+
+    Plane plane = new Plane(planeImg,250,250);
 
     int planeX=250;
     int planeY=250;
@@ -17,8 +19,7 @@ public class MyGameFrame extends JFrame{
     public void paint(Graphics g) {
 
         g.drawImage(bg,0,0,null);
-        g.drawImage(plane,planeX,planeY,null);
-        planeX++;
+        plane.drawSelf(g);
     }
     //###############################################
     class PaintThread extends Thread{
