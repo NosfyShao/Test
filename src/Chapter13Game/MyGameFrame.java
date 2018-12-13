@@ -14,6 +14,7 @@ public class MyGameFrame extends JFrame{
     Image bg = GameUtil.getImage("images/bg.png");
 
     Plane plane = new Plane(planeImg,250,250);
+    Shell[] shells= new Shell[3];
 
     int planeX=250;
     int planeY=250;
@@ -22,6 +23,10 @@ public class MyGameFrame extends JFrame{
 
         g.drawImage(bg,0,0,null);
         plane.drawSelf(g);
+        for (int i=0;i<shells.length;i++){
+            shells[i].draw(g);
+        }
+
     }
     //###############################################
     class PaintThread extends Thread{
@@ -69,6 +74,10 @@ public class MyGameFrame extends JFrame{
 
         new PaintThread().start();//启动重画窗口的线程
         addKeyListener(new KeyMonitor()); //增加键盘监听
+
+        for(int i=0;i<shells.length;i++){
+            shells[i] = new Shell();
+        }
     }
 
     public static void main(String[] args) {
