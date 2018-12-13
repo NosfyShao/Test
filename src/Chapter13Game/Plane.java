@@ -9,25 +9,33 @@ public class Plane extends GameObject{
 
     boolean left,up,right,down;
 
+    boolean alive = true;
+
     public void drawSelf(Graphics g){
-        g.drawImage(img,(int)x,(int)y,null);
-        if (left){
-            x-=speed;
-        }
-        if (right){
-            x+=speed;
-        }
-        if (up){
-            y-=speed;
-        }
-        if (down){
-            y+=speed;
+        if (alive){
+            g.drawImage(img,(int)x,(int)y,null);
+            if (left){
+                x-=speed;
+            }
+            if (right){
+                x+=speed;
+            }
+            if (up){
+                y-=speed;
+            }
+            if (down){
+                y+=speed;
+            }
         }
     }
     public Plane(Image img,double x,double y){
         this.img=img;
         this.x=x;
         this.y=y;
+
+        this.speed = 10;
+        this.width = img.getWidth(null);
+        this.height = img.getHeight(null);
 
     }
 

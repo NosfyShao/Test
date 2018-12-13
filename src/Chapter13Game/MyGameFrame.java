@@ -16,6 +16,8 @@ public class MyGameFrame extends JFrame{
     Plane plane = new Plane(planeImg,250,250);
     Shell[] shells= new Shell[3];
 
+    Explode bao;
+
     int planeX=250;
     int planeY=250;
     @Override
@@ -25,6 +27,16 @@ public class MyGameFrame extends JFrame{
         plane.drawSelf(g);
         for (int i=0;i<shells.length;i++){
             shells[i].draw(g);
+            boolean peng = shells[i].getRect().intersects(plane.getRect());
+            if (peng){
+                System.out.println("相撞了！！！");
+                plane.alive=false;
+                if (bao==null){
+                    bao=new Explode(plane.x,plane.y);
+                }
+                bao.draw(g);
+
+            }
         }
 
     }
