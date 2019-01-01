@@ -23,6 +23,11 @@ public class TestDateFormat {
             e.printStackTrace();
         }
         System.out.println(date);
+
+        //测试其他的格式字符
+        DateFormat df3 = new SimpleDateFormat("D");
+        String str3 = df3.format(new Date());
+        System.out.println(str3);
         ;
     }
 }
